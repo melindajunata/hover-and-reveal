@@ -1,0 +1,244 @@
+:root {
+  --text: #000000;
+  --muted: #5f5f5f;
+  --muted-bg: #f6f6f6;
+  --muted-border: #5f5f5f;
+  --accent: #bf761d;
+  --accent-bg: rgba(191, 118, 29, 0.1);
+  --bg: #ffffff;
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100dvh;
+}
+
+.scene {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- text block ---------- */
+
+.intro {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.6rem, 1.6vw, 1.5rem);
+  padding: clamp(1rem, 4vw, 2rem);
+  text-align: center;
+  max-width: min(92vw, 50rem);
+}
+
+.line {
+  margin: 0;
+  font-size: clamp(1.1rem, 0.7rem + 1.9vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.wave {
+  display: inline-block;
+  animation: wave 2.2s ease-in-out infinite;
+  transform-origin: 70% 70%;
+}
+
+@keyframes wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  10% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+}
+
+.blank-line {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  flex-wrap: wrap;
+}
+
+.article {
+  flex: none;
+}
+
+.blank {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5em;
+  padding: 0.2em 0.55em;
+  background: var(--muted-bg);
+  border: 1.5px dashed var(--muted-border);
+  border-radius: 0.2em;
+  color: var(--muted);
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+  max-width: 100%;
+}
+
+.blank.active {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.placeholder {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.reveal {
+  white-space: nowrap;
+}
+
+.caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  background: currentColor;
+  animation: blink 0.9s step-end infinite;
+}
+
+.caret[hidden] {
+  display: none;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave,
+  .caret {
+    animation: none;
+  }
+}
+
+/* ---------- icons: wide / hover layout ---------- */
+
+.icons {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.icon {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0.5em;
+  margin: -0.5em;
+  font-size: clamp(2.4rem, 1.4rem + 3.4vw, 5.5rem);
+  line-height: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 50%;
+  transition: transform 0.18s ease;
+}
+
+.icon--coffee {
+  font-size: clamp(2.6rem, 1.5rem + 3.7vw, 6rem);
+}
+
+.icon:hover,
+.icon:focus-visible {
+  transform: translate(-50%, -50%) scale(1.12);
+}
+
+.icon:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- narrow / short viewports: text on top, organic scatter below ---------- */
+
+@media (max-width: 1000px), (max-height: 700px) {
+  .scene {
+    padding: clamp(1.5rem, 6vw, 3rem) 0;
+    min-height: 100dvh;
+    height: auto;
+  }
+
+  .intro {
+    order: 1;
+    flex: none;
+  }
+
+  .icons {
+    order: 2;
+    position: relative;
+    inset: auto;
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: clamp(18rem, 62vh, 34rem);
+    margin-top: clamp(1.25rem, 6vw, 2.5rem);
+  }
+
+  .icon {
+    left: var(--mx);
+    top: var(--my);
+    font-size: clamp(1.9rem, 1rem + 5.4vw, 3.4rem);
+  }
+
+  .icon--coffee {
+    font-size: clamp(2.15rem, 1.1rem + 6.4vw, 4rem);
+  }
+
+  .icon:hover,
+  .icon:focus-visible {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  .line {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 400px) {
+  .icon {
+    font-size: clamp(1.6rem, 1rem + 4.4vw, 2.6rem);
+  }
+
+  .icon--coffee {
+    font-size: clamp(1.8rem, 1.1rem + 5vw, 2.9rem);
+  }
+}
+
+@media (max-width: 360px) {
+  .blank-line {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15em;
+  }
+}

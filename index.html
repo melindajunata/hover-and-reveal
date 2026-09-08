@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>melinda junata</title>
+  <meta name="description" content="hi there, i'm melinda — a UI/UX product designer based in Hong Kong. hover or tap an icon to find out more." />
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="scene">
+    <div class="icons" id="icons">
+      <button class="icon icon--trumpet"  type="button" style="--x:12.7%; --y:15.8%; --mx:18.3%; --my:12%"   data-word="jazz enthusiast" data-article="a" aria-label="trumpet">🎺</button>
+      <button class="icon icon--camera"   type="button" style="--x:36.9%; --y:19.2%; --mx:75.6%; --my:13%"   data-word="camera person" data-article="a" aria-label="camera">📸</button>
+      <button class="icon icon--bike"     type="button" style="--x:61.1%; --y:21.5%; --mx:13.4%; --my:43.2%" data-word="wanna be cyclist" data-article="a" aria-label="bicycle">🚲</button>
+      <button class="icon icon--chair"    type="button" style="--x:86.2%; --y:26%;   --mx:81.5%; --my:45.6%" data-word="wood trainee" data-article="a" aria-label="chair">🪑</button>
+      <button class="icon icon--coffee"   type="button" style="--x:12.1%; --y:66.7%; --mx:53%;   --my:63%"   data-word="coffee enthusiast" data-article="a" aria-label="coffee">☕️</button>
+      <button class="icon icon--laptop"   type="button" style="--x:55.6%; --y:78.3%; --mx:48%;   --my:27.4%" data-word="ui/ux product designer" data-article="a" aria-label="laptop">💻</button>
+      <button class="icon icon--flag"     type="button" style="--x:29.1%; --y:84.2%; --mx:16%;   --my:82%"   data-word="indonesian" data-article="an" aria-label="Indonesian flag">🇮🇩</button>
+      <button class="icon icon--globe"    type="button" style="--x:84.2%; --y:84.2%; --mx:80%;   --my:86%"   data-word="globetrotter" data-article="a" aria-label="globe">🌏</button>
+    </div>
+
+    <div class="intro">
+      <p class="line">hi there! i'm melinda <span class="wave" aria-hidden="true">👋🏼</span></p>
+      <p class="line blank-line">
+        <span class="article" id="article">a</span>
+        <span class="blank" id="blank">
+          <span class="placeholder" id="placeholder">hover an icon to fill in the blank</span><span class="reveal" id="reveal"></span><span class="caret" id="caret" hidden aria-hidden="true"></span>
+        </span>
+      </p>
+      <p class="line">based in <span aria-hidden="true">🇭🇰</span> hong kong</p>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
