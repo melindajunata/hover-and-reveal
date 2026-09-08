@@ -37,6 +37,8 @@
     placeholderEl.hidden = true;
     revealEl.hidden = false;
     blankEl.classList.add("active");
+    blankEl.style.setProperty("--accent", icon.dataset.color);
+    blankEl.style.setProperty("--accent-bg", icon.dataset.bg);
     caretEl.hidden = false;
 
     if (reducedMotion) {
