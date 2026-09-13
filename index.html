@@ -14,14 +14,14 @@
 <body>
   <main class="scene">
     <div class="icons" id="icons">
-      <button class="icon icon--trumpet"  type="button" style="--x:12.7%;  --y:15.8%; --mx:18.35%; --my:41.62%" data-word="jazz enthusiast" data-article="a" data-color="#c21778" data-bg="rgba(194,23,120,0.1)" aria-label="trumpet">🎺</button>
-      <button class="icon icon--camera"   type="button" style="--x:36.9%;  --y:19.2%; --mx:75.56%; --my:37.51%" data-word="camera person" data-article="a" data-color="#008f85" data-bg="rgba(0,143,133,0.1)" aria-label="camera">📸</button>
-      <button class="icon icon--bike"     type="button" style="--x:61.1%;  --y:21.5%; --mx:13.38%; --my:63.83%" data-word="wannabe cyclist" data-article="a" data-color="#1c5ecc" data-bg="rgba(28,94,204,0.1)" aria-label="bicycle">🚲</button>
-      <button class="icon icon--chair"    type="button" style="--x:86.2%;  --y:26%;   --mx:81.53%; --my:64.85%" data-word="wood trainee" data-article="a" data-color="#b84f17" data-bg="rgba(184,79,23,0.1)" aria-label="chair">🪑</button>
-      <button class="icon icon--coffee"   type="button" style="--x:12.1%;  --y:66.7%; --mx:47.15%; --my:75.43%" data-word="coffee enthusiast" data-article="a" data-color="#bf761d" data-bg="rgba(191,118,29,0.1)" aria-label="coffee">☕️</button>
-      <button class="icon icon--laptop"   type="button" style="--x:55.6%;  --y:78.3%; --mx:47.95%; --my:52.26%" data-word="ui/ux product designer" data-article="a" data-color="#7821bf" data-bg="rgba(120,33,191,0.1)" aria-label="laptop">💻</button>
-      <button class="icon icon--flag"     type="button" style="--x:29.1%;  --y:84.2%; --mx:22.08%; --my:83.6%"  data-word="indonesian" data-article="an" data-color="#c00505" data-bg="#f7f1f1" aria-label="Indonesian flag">🇮🇩</button>
-      <button class="icon icon--globe"    type="button" style="--x:84.2%;  --y:84.2%; --mx:80.04%; --my:88.76%" data-word="globetrotter" data-article="a" data-color="#129140" data-bg="rgba(18,145,64,0.1)" aria-label="globe">🌏</button>
+      <button class="icon icon--trumpet"  type="button" style="--x:12.7%;  --y:15.8%; --mx:18.35%; --my:41.62%; --rot:5.17deg"   data-word="jazz enthusiast" data-article="a" data-color="#c21778" data-bg="rgba(194,23,120,0.1)" aria-label="trumpet">🎺</button>
+      <button class="icon icon--camera"   type="button" style="--x:36.9%;  --y:19.2%; --mx:75.56%; --my:37.51%; --rot:5.17deg"   data-word="camera person" data-article="a" data-color="#008f85" data-bg="rgba(0,143,133,0.1)" aria-label="camera">📸</button>
+      <button class="icon icon--bike"     type="button" style="--x:61.1%;  --y:21.5%; --mx:16%;    --my:63.83%; --rot:-19.37deg" data-word="wannabe cyclist" data-article="a" data-color="#1c5ecc" data-bg="rgba(28,94,204,0.1)" aria-label="bicycle">🚲</button>
+      <button class="icon icon--chair"    type="button" style="--x:86.2%;  --y:26%;   --mx:81.53%; --my:64.85%; --rot:5.17deg"   data-word="wood trainee" data-article="a" data-color="#b84f17" data-bg="rgba(184,79,23,0.1)" aria-label="chair">🪑</button>
+      <button class="icon icon--coffee"   type="button" style="--x:12.1%;  --y:66.7%; --mx:50%;    --my:75.43%; --rot:-20.61deg" data-word="coffee enthusiast" data-article="a" data-color="#bf761d" data-bg="rgba(191,118,29,0.1)" aria-label="coffee">☕️</button>
+      <button class="icon icon--laptop"   type="button" style="--x:55.6%;  --y:78.3%; --mx:47.95%; --my:52.26%; --rot:5.17deg"   data-word="ui/ux product designer" data-article="a" data-color="#7821bf" data-bg="rgba(120,33,191,0.1)" aria-label="laptop">💻</button>
+      <button class="icon icon--flag"     type="button" style="--x:29.1%;  --y:84.2%; --mx:22.08%; --my:83.6%;  --rot:5.17deg"   data-word="indonesian" data-article="an" data-color="#c00505" data-bg="#f7f1f1" aria-label="Indonesian flag">🇮🇩</button>
+      <button class="icon icon--globe"    type="button" style="--x:84.2%;  --y:84.2%; --mx:80.04%; --my:88.76%; --rot:5.17deg"   data-word="globetrotter" data-article="a" data-color="#129140" data-bg="rgba(18,145,64,0.1)" aria-label="globe">🌏</button>
     </div>
 
     <div class="intro">
@@ -35,6 +35,8 @@
       <p class="line">based in <span aria-hidden="true">🇭🇰</span> hong kong</p>
     </div>
   </main>
+
+  <div class="cursor-tip" id="cursorTip" role="tooltip" hidden>click to explore more</div>
 
   <script src="script.js"></script>
 </body>

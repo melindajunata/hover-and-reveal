@@ -21,6 +21,7 @@ body {
   color: var(--text);
   font-family: var(--font);
   overflow-x: hidden;
+  cursor: url("cursor.svg") 6 5, auto;
 }
 
 body {
@@ -151,17 +152,16 @@ body {
   position: absolute;
   left: var(--x);
   top: var(--y);
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: none;
   border: none;
   padding: 0.5em;
-  margin: -0.5em;
   font-size: clamp(2.4rem, 1.4rem + 3.4vw, 5.5rem);
   line-height: 1;
-  cursor: pointer;
+  cursor: url("cursor.svg") 6 5, pointer;
   -webkit-tap-highlight-color: transparent;
   border-radius: 50%;
   transition: transform 0.18s ease;
@@ -173,12 +173,42 @@ body {
 
 .icon:hover,
 .icon:focus-visible {
-  transform: translate(-50%, -50%) scale(1.12);
+  transform: translate(-50%, -50%) rotate(var(--rot, 0deg)) scale(1.12);
 }
 
 .icon:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* ---------- one-time "explore more" nudge ---------- */
+
+.cursor-tip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background: #ffffff;
+  color: #000000;
+  border: 1.5px solid #000000;
+  border-radius: 0.5rem;
+  padding: 0.35rem 0.55rem;
+  font-family: var(--font);
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  will-change: transform, opacity;
+}
+
+.cursor-tip.visible {
+  opacity: 1;
+}
+
+.cursor-tip[hidden] {
+  display: none;
 }
 
 /* ---------- narrow / short viewports: positions match the Figma mobile
@@ -211,19 +241,19 @@ body {
     font-size: min(15vw, 7.95vh);
     /* tighter tap-target halo than the desktop scatter, so the invisible
        hit-area doesn't touch a neighbor's on the denser mobile layout */
-    padding: 0.3em;
-    margin: -0.3em;
+    padding: 0.22em;
+    /* Figma gives every mobile icon its own tilt instead of sitting flat */
+    transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
   }
 
   .icon--coffee {
     font-size: min(17.5vw, 9.5vh);
-    padding: 0.2em;
-    margin: -0.2em;
+    padding: 0.1em;
   }
 
   .icon:hover,
   .icon:focus-visible {
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, -50%) rotate(var(--rot, 0deg)) scale(1.1);
   }
 }
 
@@ -271,13 +301,13 @@ body {
   .icon,
   .icon--coffee {
     position: static;
-    transform: none;
+    transform: rotate(var(--rot, 0deg));
     margin: 0;
     font-size: clamp(1.9rem, 1.2rem + 4vw, 2.75rem);
   }
 
   .icon:hover,
   .icon:focus-visible {
-    transform: scale(1.1);
+    transform: rotate(var(--rot, 0deg)) scale(1.1);
   }
 }
