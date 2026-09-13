@@ -18,7 +18,7 @@
       <button class="icon icon--camera"   type="button" style="--x:36.9%;  --y:19.2%; --mx:75.56%; --my:37.51%; --rot:5.17deg"   data-word="camera person" data-article="a" data-color="#008f85" data-bg="rgba(0,143,133,0.1)" aria-label="camera">📸</button>
       <button class="icon icon--bike"     type="button" style="--x:61.1%;  --y:21.5%; --mx:16%;    --my:63.83%; --rot:-19.37deg" data-word="wannabe cyclist" data-article="a" data-color="#1c5ecc" data-bg="rgba(28,94,204,0.1)" aria-label="bicycle">🚲</button>
       <button class="icon icon--chair"    type="button" style="--x:86.2%;  --y:26%;   --mx:81.53%; --my:64.85%; --rot:5.17deg"   data-word="wood trainee" data-article="a" data-color="#b84f17" data-bg="rgba(184,79,23,0.1)" aria-label="chair">🪑</button>
-      <button class="icon icon--coffee"   type="button" style="--x:12.1%;  --y:66.7%; --mx:50%;    --my:75.43%; --rot:-20.61deg" data-word="coffee enthusiast" data-article="a" data-color="#bf761d" data-bg="rgba(191,118,29,0.1)" aria-label="coffee">☕️</button>
+      <button class="icon icon--coffee"   type="button" style="--x:12.1%;  --y:66.7%; --mx:50%;    --my:75.43%; --rot:-20.61deg" data-word="coffee enthusiast" data-article="a" data-color="#bf761d" data-bg="rgba(191,118,29,0.1)" data-detail="true" aria-label="coffee, open coffee story">☕️</button>
       <button class="icon icon--laptop"   type="button" style="--x:55.6%;  --y:78.3%; --mx:47.95%; --my:52.26%; --rot:5.17deg"   data-word="ui/ux product designer" data-article="a" data-color="#7821bf" data-bg="rgba(120,33,191,0.1)" aria-label="laptop">💻</button>
       <button class="icon icon--flag"     type="button" style="--x:29.1%;  --y:84.2%; --mx:22.08%; --my:83.6%;  --rot:5.17deg"   data-word="indonesian" data-article="an" data-color="#c00505" data-bg="#f7f1f1" aria-label="Indonesian flag">🇮🇩</button>
       <button class="icon icon--globe"    type="button" style="--x:84.2%;  --y:84.2%; --mx:80.04%; --my:88.76%; --rot:5.17deg"   data-word="globetrotter" data-article="a" data-color="#129140" data-bg="rgba(18,145,64,0.1)" aria-label="globe">🌏</button>
@@ -37,6 +37,36 @@
   </main>
 
   <div class="cursor-tip" id="cursorTip" role="tooltip" hidden>click to explore more</div>
+
+  <div class="detail-overlay" id="detailOverlay" hidden>
+    <div class="detail-panel" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+      <div class="detail-panel__top">
+        <button class="detail-close" id="detailClose" type="button" aria-label="Close">
+          <svg class="detail-close__icon detail-close__icon--x" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+          </svg>
+          <svg class="detail-close__icon detail-close__icon--chevron" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+            <path d="M6 15l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          </svg>
+        </button>
+      </div>
+      <div class="detail-panel__body">
+        <div class="detail-icon" aria-hidden="true">☕️</div>
+        <div class="detail-content">
+          <div class="detail-heading">
+            <p class="detail-heading__label">coffee.</p>
+            <p class="detail-heading__title" id="detailTitle">i used to hate it, but now i cannot imagine life without it.</p>
+          </div>
+          <div class="detail-text">
+            <p>i was drinking bad coffee and once i started to explore more coffee, i realized how interesting it is.</p>
+            <p>how can a tiny bean can pack so many flavors? it's still an impressive work of art.</p>
+            <p>now coffee is my morning ritual. sometimes, when i thought i am going through a bad day, i realized that's just because i haven't had my cup of coffee.</p>
+          </div>
+          <p class="detail-fact">fun fact: i only drink black coffee and i write my document every cup of black coffee (most of them, i tried) that i've had online about it. you can read it more about it at <span class="detail-fact__link">@hotbeansjournal</span> :)</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

@@ -6,6 +6,8 @@
   const revealEl = document.getElementById("reveal");
   const caretEl = document.getElementById("caret");
   const cursorTipEl = document.getElementById("cursorTip");
+  const detailOverlayEl = document.getElementById("detailOverlay");
+  const detailCloseEl = document.getElementById("detailClose");
 
   // Same breakpoint as the CSS layout switch: below it the page is treated
   // as a mobile/tap experience regardless of pointer type.
@@ -116,6 +118,38 @@
     caretEl.hidden = true;
   }
 
+  // ---- coffee detail: centered dialog (desktop) / bottom sheet (mobile) ----
+  let detailOpen = false;
+
+  function onDetailKeydown(event) {
+    if (event.key === "Escape") closeDetail();
+  }
+
+  function openDetail() {
+    if (detailOpen) return;
+    detailOpen = true;
+    detailOverlayEl.hidden = false;
+    document.body.classList.add("detail-open");
+    requestAnimationFrame(() => detailOverlayEl.classList.add("open"));
+    document.addEventListener("keydown", onDetailKeydown);
+  }
+
+  function closeDetail() {
+    if (!detailOpen) return;
+    detailOpen = false;
+    detailOverlayEl.classList.remove("open");
+    document.body.classList.remove("detail-open");
+    document.removeEventListener("keydown", onDetailKeydown);
+    setTimeout(() => {
+      if (!detailOpen) detailOverlayEl.hidden = true;
+    }, 320);
+  }
+
+  detailCloseEl.addEventListener("click", closeDetail);
+  detailOverlayEl.addEventListener("click", (event) => {
+    if (event.target === detailOverlayEl) closeDetail();
+  });
+
   function bindInteractions() {
     icons.forEach((icon) => {
       icon.addEventListener("mouseenter", (event) => {
@@ -146,7 +180,12 @@
       });
 
       icon.addEventListener("click", (event) => {
-        if (!isTapMode()) return;
+        if (!isTapMode()) {
+          // Desktop: hover already handles the reveal — a click here only
+          // opens an icon's detail panel, if it has one.
+          if (icon.dataset.detail) openDetail();
+          return;
+        }
         event.stopPropagation();
         if (activeIcon === icon) {
           reset();
@@ -154,6 +193,7 @@
         } else {
           activeIcon = icon;
           reveal(icon);
+          if (icon.dataset.detail) openDetail();
         }
       });
     });
