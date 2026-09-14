@@ -65,47 +65,29 @@
     }, TYPE_SPEED);
   }
 
-  // ---- one-time "explore more" nudge, shown on the first real mouse
-  // hover only — touch devices never trigger this ----
-  const EXPLORE_TIP_KEY = "hoverAndReveal.exploreTipShown";
-  let tipDismissed = !hasHover;
+  // ---- "explore more" nudge: shown every time a real mouse hovers an
+  // icon (never on touch, regardless of screen size) ----
   let tipHideTimer = null;
-
-  if (hasHover) {
-    try {
-      tipDismissed = localStorage.getItem(EXPLORE_TIP_KEY) === "1";
-    } catch {
-      tipDismissed = false;
-    }
-  }
 
   function positionTip(x, y) {
     cursorTipEl.style.transform = `translate(${x + 16}px, ${y + 20}px)`;
   }
 
   function showTipAt(x, y) {
-    if (tipDismissed) return;
+    if (!hasHover) return;
+    clearTimeout(tipHideTimer);
     cursorTipEl.hidden = false;
     positionTip(x, y);
     requestAnimationFrame(() => cursorTipEl.classList.add("visible"));
   }
 
   function hideTip() {
+    if (!hasHover) return;
     clearTimeout(tipHideTimer);
     cursorTipEl.classList.remove("visible");
     tipHideTimer = setTimeout(() => {
       cursorTipEl.hidden = true;
     }, 200);
-  }
-
-  function dismissTipForever() {
-    if (tipDismissed) return;
-    tipDismissed = true;
-    try {
-      localStorage.setItem(EXPLORE_TIP_KEY, "1");
-    } catch {
-      /* ignore */
-    }
   }
 
   function reset() {
@@ -159,7 +141,7 @@
       });
 
       icon.addEventListener("mousemove", (event) => {
-        if (isTapMode() || tipDismissed) return;
+        if (isTapMode()) return;
         positionTip(event.clientX, event.clientY);
       });
 
@@ -167,10 +149,7 @@
         if (isTapMode()) return;
         reset();
         activeIcon = null;
-        if (!tipDismissed) {
-          hideTip();
-          dismissTipForever();
-        }
+        hideTip();
       });
 
       icon.addEventListener("focus", () => reveal(icon));

@@ -21,7 +21,7 @@ body {
   color: var(--text);
   font-family: var(--font);
   overflow-x: hidden;
-  cursor: url("cursor.png") 18 15, auto;
+  cursor: url("cursor.png") 6 5, auto;
 }
 
 body {
@@ -161,7 +161,7 @@ body {
   padding: 0.5em;
   font-size: clamp(2.4rem, 1.4rem + 3.4vw, 5.5rem);
   line-height: 1;
-  cursor: url("cursor.png") 18 15, pointer;
+  cursor: url("cursor.png") 6 5, pointer;
   -webkit-tap-highlight-color: transparent;
   border-radius: 50%;
   transition: transform 0.18s ease;
@@ -239,7 +239,7 @@ body.detail-open .intro {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s ease;
-  cursor: url("cursor.png") 18 15, auto;
+  cursor: url("cursor.png") 6 5, auto;
 }
 
 .detail-overlay[hidden] {
@@ -284,7 +284,7 @@ body.detail-open .intro {
   margin: -4px;
   display: inline-flex;
   color: #000000;
-  cursor: url("cursor.png") 18 15, pointer;
+  cursor: url("cursor.png") 6 5, pointer;
 }
 
 .detail-close__icon--x {
