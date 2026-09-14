@@ -118,19 +118,6 @@ body {
   opacity: 1;
 }
 
-/* While fading out, take the element out of flex flow so it doesn't sit
-   side-by-side with the incoming text and widen the box mid-transition —
-   it keeps fading in place instead of snapping away instantly. */
-.placeholder.fading-out,
-.reveal.fading-out {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
 .placeholder {
   white-space: normal;
   overflow-wrap: anywhere;

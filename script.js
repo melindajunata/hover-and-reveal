@@ -1,5 +1,6 @@
 (() => {
   const icons = Array.from(document.querySelectorAll(".icon"));
+  const introEl = document.querySelector(".intro");
   const articleEl = document.getElementById("article");
   const blankEl = document.getElementById("blank");
   const placeholderEl = document.getElementById("placeholder");
@@ -57,6 +58,37 @@
     }, TYPE_SPEED);
   }
 
+  // Pins an element to its exact current on-screen position via
+  // position:fixed, so it can be pulled out of flex flow without the
+  // sibling that replaces it (which resizes .blank, which re-centers the
+  // whole row) dragging it sideways mid-fade.
+  function freeze(el) {
+    // position:fixed is normally viewport-relative, but a transformed
+    // ancestor becomes the containing block instead per spec — .intro
+    // uses translate() to center itself on narrow/mobile layouts, so
+    // fixed descendants there resolve against *its* box, not the
+    // viewport. Both rects are read here against the same, still
+    // unchanged layout (before el leaves flow), so there's no reflow
+    // between the two reads to introduce its own drift.
+    const targetRect = el.getBoundingClientRect();
+    const introTransformed = getComputedStyle(introEl).transform !== "none";
+    const originRect = introTransformed ? introEl.getBoundingClientRect() : { left: 0, top: 0 };
+
+    el.style.position = "fixed";
+    el.style.margin = "0";
+    el.style.pointerEvents = "none";
+    el.style.left = `${targetRect.left - originRect.left}px`;
+    el.style.top = `${targetRect.top - originRect.top}px`;
+  }
+
+  function unfreeze(el) {
+    el.style.position = "";
+    el.style.left = "";
+    el.style.top = "";
+    el.style.margin = "";
+    el.style.pointerEvents = "";
+  }
+
   // Hovering icons never re-types — the blank just fades between whatever
   // text it's currently showing and the next.
   function reveal(icon) {
@@ -71,16 +103,16 @@
     blankEl.style.setProperty("--accent", icon.dataset.color);
     blankEl.style.setProperty("--accent-bg", icon.dataset.bg);
 
-    // Pull the placeholder out of flex flow as it fades so it can't sit
-    // side-by-side with the incoming word and widen the box.
+    // Freeze the placeholder exactly where it's sitting, then pull it out
+    // of flex flow — .blank is about to resize around the incoming word.
+    freeze(placeholderEl);
     placeholderEl.classList.remove("visible");
-    placeholderEl.classList.add("fading-out");
     placeholderHideTimer = setTimeout(() => {
       placeholderEl.hidden = true;
-      placeholderEl.classList.remove("fading-out");
+      unfreeze(placeholderEl);
     }, FADE_MS);
 
-    revealEl.classList.remove("fading-out");
+    unfreeze(revealEl);
     revealEl.textContent = word;
     revealEl.hidden = false;
     requestAnimationFrame(() => revealEl.classList.add("visible"));
@@ -118,17 +150,17 @@
     articleEl.textContent = DEFAULT_ARTICLE;
     blankEl.classList.remove("active");
 
-    // Same out-of-flow trick in reverse: the revealed word fades out on
-    // top while the placeholder resumes the box's normal flow width.
+    // Same freeze-then-remove trick in reverse: the revealed word fades
+    // out pinned in place while the placeholder resumes flow.
+    freeze(revealEl);
     revealEl.classList.remove("visible");
-    revealEl.classList.add("fading-out");
     revealHideTimer = setTimeout(() => {
       revealEl.hidden = true;
       revealEl.textContent = "";
-      revealEl.classList.remove("fading-out");
+      unfreeze(revealEl);
     }, FADE_MS);
 
-    placeholderEl.classList.remove("fading-out");
+    unfreeze(placeholderEl);
     placeholderEl.hidden = false;
     requestAnimationFrame(() => placeholderEl.classList.add("visible"));
   }
