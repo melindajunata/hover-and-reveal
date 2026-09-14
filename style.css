@@ -62,17 +62,17 @@ body {
 
 .wave {
   display: inline-block;
-  animation: wave 2.2s ease-in-out infinite;
+  animation: wave 6.5s ease-in-out infinite;
   transform-origin: 70% 70%;
 }
 
 @keyframes wave {
-  0%, 60%, 100% { transform: rotate(0deg); }
+  0%, 20%, 100% { transform: rotate(0deg); }
+  3% { transform: rotate(14deg); }
+  7% { transform: rotate(-8deg); }
   10% { transform: rotate(14deg); }
-  20% { transform: rotate(-8deg); }
-  30% { transform: rotate(14deg); }
-  40% { transform: rotate(-4deg); }
-  50% { transform: rotate(10deg); }
+  14% { transform: rotate(-4deg); }
+  17% { transform: rotate(10deg); }
 }
 
 .blank-line {
@@ -105,6 +105,17 @@ body {
   background: var(--accent-bg);
   border-color: var(--accent);
   color: var(--accent);
+}
+
+.placeholder,
+.reveal {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.placeholder.visible,
+.reveal.visible {
+  opacity: 1;
 }
 
 .placeholder {

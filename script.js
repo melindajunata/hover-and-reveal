@@ -19,50 +19,66 @@
 
   const DEFAULT_ARTICLE = "a";
   const TYPE_SPEED = 26;
+  const FADE_MS = 200;
 
   let typingTimer = null;
+  let placeholderHideTimer = null;
+  let revealHideTimer = null;
   let activeIcon = null;
 
   function isTapMode() {
     return layoutQuery.matches;
   }
 
-  function setPlaceholderCopy() {
-    placeholderEl.textContent = isTapMode()
+  function getPlaceholderText() {
+    return isTapMode()
       ? "tap an icon to fill in the blank"
       : "hover an icon to fill in the blank";
   }
 
-  function reveal(icon) {
+  // Types text into el one character at a time, with a blinking caret —
+  // used once, for the placeholder on page load.
+  function typeText(el, text) {
     clearInterval(typingTimer);
+    if (reducedMotion) {
+      el.textContent = text;
+      return;
+    }
+    let i = 0;
+    el.textContent = "";
+    caretEl.hidden = false;
+    typingTimer = setInterval(() => {
+      i += 1;
+      el.textContent = text.slice(0, i);
+      if (i >= text.length) {
+        clearInterval(typingTimer);
+        caretEl.hidden = true;
+      }
+    }, TYPE_SPEED);
+  }
+
+  // Hovering icons never re-types — the blank just fades between whatever
+  // text it's currently showing and the next.
+  function reveal(icon) {
+    clearTimeout(placeholderHideTimer);
+    clearTimeout(revealHideTimer);
 
     const word = icon.dataset.word;
     const article = icon.dataset.article || DEFAULT_ARTICLE;
 
     articleEl.textContent = article;
-    placeholderEl.hidden = true;
-    revealEl.hidden = false;
     blankEl.classList.add("active");
     blankEl.style.setProperty("--accent", icon.dataset.color);
     blankEl.style.setProperty("--accent-bg", icon.dataset.bg);
-    caretEl.hidden = false;
 
-    if (reducedMotion) {
-      revealEl.textContent = word;
-      caretEl.hidden = true;
-      return;
-    }
+    placeholderEl.classList.remove("visible");
+    placeholderHideTimer = setTimeout(() => {
+      placeholderEl.hidden = true;
+    }, FADE_MS);
 
-    let i = 0;
-    revealEl.textContent = "";
-    typingTimer = setInterval(() => {
-      i += 1;
-      revealEl.textContent = word.slice(0, i);
-      if (i >= word.length) {
-        clearInterval(typingTimer);
-        caretEl.hidden = true;
-      }
-    }, TYPE_SPEED);
+    revealEl.textContent = word;
+    revealEl.hidden = false;
+    requestAnimationFrame(() => revealEl.classList.add("visible"));
   }
 
   // ---- "explore more" nudge: shown every time a real mouse hovers an
@@ -91,13 +107,20 @@
   }
 
   function reset() {
-    clearInterval(typingTimer);
+    clearTimeout(placeholderHideTimer);
+    clearTimeout(revealHideTimer);
+
     articleEl.textContent = DEFAULT_ARTICLE;
-    revealEl.textContent = "";
-    revealEl.hidden = true;
-    placeholderEl.hidden = false;
     blankEl.classList.remove("active");
-    caretEl.hidden = true;
+
+    revealEl.classList.remove("visible");
+    revealHideTimer = setTimeout(() => {
+      revealEl.hidden = true;
+      revealEl.textContent = "";
+    }, FADE_MS);
+
+    placeholderEl.hidden = false;
+    requestAnimationFrame(() => placeholderEl.classList.add("visible"));
   }
 
   // ---- coffee detail: centered dialog (desktop) / bottom sheet (mobile) ----
@@ -186,9 +209,14 @@
     });
   }
 
-  setPlaceholderCopy();
+  // Type the placeholder out once on load; later mode switches (a resize
+  // crossing the breakpoint) just swap the text instantly.
+  placeholderEl.hidden = false;
+  placeholderEl.classList.add("visible");
+  typeText(placeholderEl, getPlaceholderText());
+
   layoutQuery.addEventListener("change", () => {
-    setPlaceholderCopy();
+    placeholderEl.textContent = getPlaceholderText();
     reset();
     activeIcon = null;
   });
