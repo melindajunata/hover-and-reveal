@@ -71,11 +71,16 @@
     blankEl.style.setProperty("--accent", icon.dataset.color);
     blankEl.style.setProperty("--accent-bg", icon.dataset.bg);
 
+    // Pull the placeholder out of flex flow as it fades so it can't sit
+    // side-by-side with the incoming word and widen the box.
     placeholderEl.classList.remove("visible");
+    placeholderEl.classList.add("fading-out");
     placeholderHideTimer = setTimeout(() => {
       placeholderEl.hidden = true;
+      placeholderEl.classList.remove("fading-out");
     }, FADE_MS);
 
+    revealEl.classList.remove("fading-out");
     revealEl.textContent = word;
     revealEl.hidden = false;
     requestAnimationFrame(() => revealEl.classList.add("visible"));
@@ -113,12 +118,17 @@
     articleEl.textContent = DEFAULT_ARTICLE;
     blankEl.classList.remove("active");
 
+    // Same out-of-flow trick in reverse: the revealed word fades out on
+    // top while the placeholder resumes the box's normal flow width.
     revealEl.classList.remove("visible");
+    revealEl.classList.add("fading-out");
     revealHideTimer = setTimeout(() => {
       revealEl.hidden = true;
       revealEl.textContent = "";
+      revealEl.classList.remove("fading-out");
     }, FADE_MS);
 
+    placeholderEl.classList.remove("fading-out");
     placeholderEl.hidden = false;
     requestAnimationFrame(() => placeholderEl.classList.add("visible"));
   }
